@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vcard/models/contact_model.dart';
+import 'package:vcard/pages/contact_form.dart';
 import 'package:vcard/utils/constants.dart';
 
 class ScanPage extends StatefulWidget {
@@ -19,13 +22,28 @@ class _ScanPageState extends State<ScanPage> {
   bool isScanOver = false;
   List<String> lines = [];
   String name = '', mobile = '', email = '',
-  address = '',company = '',desination = '',website = '';
+  address = '',company = '',desination = '',website = '',image='';
+  createContacts() {
+    final contact = ContactModel(name: name, phone: mobile,email: email,
+        address: address,company: company,website: website,desination:
+        desination,image: image);
+
+    context.goNamed(ContactForm.routeName,extra: contact);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scan Page'),
+        actions: [
+          IconButton(onPressed:  image.isEmpty? null : (){
+            createContacts();
+          }, icon:
+          const Icon
+            (Icons
+              .arrow_forward))
+        ],
       ),
       body: ListView(
         children: [
@@ -85,6 +103,9 @@ class _ScanPageState extends State<ScanPage> {
   void getImage(ImageSource source) async {
     final xFile = await ImagePicker().pickImage(source: source);
     if (xFile != null) {
+      setState(() {
+        image = xFile.path;
+      });
       EasyLoading.show(status: 'Please wait for a while');
       final textRecognizer =
           TextRecognizer(script: TextRecognitionScript.latin);
@@ -115,8 +136,23 @@ class _ScanPageState extends State<ScanPage> {
     switch(property){
       case ContactProperties.name:
         name = value;
+        break;
+        case ContactProperties.mobile:
+        name = value;
+        break;  case ContactProperties.email:
+        name = value;
+        break;  case ContactProperties.companyName:
+        name = value;
+        break;  case ContactProperties.designation:
+        name = value;
+        break;  case ContactProperties.address:
+        name = value;
+        break;  case ContactProperties.website:
+        name = value;
+        break;
     }
   }
+
 }
 
 class LineItem extends StatelessWidget {
@@ -126,7 +162,7 @@ class LineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Chip(label: Text(line));
+    
     return LongPressDraggable(
         data: line,
         dragAnchorStrategy: childDragAnchorStrategy,
