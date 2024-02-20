@@ -24,9 +24,11 @@ class _ScanPageState extends State<ScanPage> {
   String name = '', mobile = '', email = '',
   address = '',company = '',desination = '',website = '',image='';
   createContacts() {
-    final contact = ContactModel(name: name, phone: mobile,email: email,
+    final contact = ContactModel(name: name, mobile: mobile,email: email,
         address: address,company: company,website: website,desination:
         desination,image: image);
+
+    print(contact.toString());
 
     context.goNamed(ContactForm.routeName,extra: contact);
   }
@@ -66,7 +68,7 @@ class _ScanPageState extends State<ScanPage> {
           ),
           Card(
             child: Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   DragTargetItem(
@@ -138,17 +140,22 @@ class _ScanPageState extends State<ScanPage> {
         name = value;
         break;
         case ContactProperties.mobile:
-        name = value;
-        break;  case ContactProperties.email:
-        name = value;
-        break;  case ContactProperties.companyName:
-        name = value;
-        break;  case ContactProperties.designation:
-        name = value;
-        break;  case ContactProperties.address:
-        name = value;
-        break;  case ContactProperties.website:
-        name = value;
+        mobile = value;
+        break;
+        case ContactProperties.email:
+        email = value;
+        break;
+        case ContactProperties.companyName:
+        company = value;
+        break;
+        case ContactProperties.designation:
+        desination = value;
+        break;
+        case ContactProperties.address:
+        address = value;
+        break;
+        case ContactProperties.website:
+        website = value;
         break;
     }
   }
@@ -205,7 +212,7 @@ class _DragTargetItemState extends State<DragTargetItem> {
             flex: 2,
             child: DragTarget(
               builder: (context, candidateData, rejecteData) => Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     border: candidateData.isNotEmpty
                         ? Border.all(color: Colors.deepOrange, width: 2)

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:vcard/models/contact_model.dart';
 import 'package:vcard/pages/contact_form.dart';
 import 'package:vcard/pages/home_page.dart';
 import 'package:vcard/pages/scan_page.dart';
+import 'package:vcard/providers/contact_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (BuildContext context) => ContactsProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,8 +44,9 @@ class MyApp extends StatelessWidget {
                 GoRoute(
                     path: ContactForm.routeName,
                     name: ContactForm.routeName,
-                    builder: (context, state) =>  ContactForm
-                      (contactModel: state.extra! as ContactModel,))
+                    builder: (context, state) => ContactForm(
+                          contactModel: state.extra! as ContactModel,
+                        ))
               ]),
         ])
   ]);
