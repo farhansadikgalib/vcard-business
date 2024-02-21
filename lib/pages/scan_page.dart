@@ -21,16 +21,29 @@ class ScanPage extends StatefulWidget {
 class _ScanPageState extends State<ScanPage> {
   bool isScanOver = false;
   List<String> lines = [];
-  String name = '', mobile = '', email = '',
-  address = '',company = '',desination = '',website = '',image='';
+  String name = '',
+      mobile = '',
+      email = '',
+      address = '',
+      company = '',
+      desination = '',
+      website = '',
+      image = '';
+
   createContacts() {
-    final contact = ContactModel(name: name, mobile: mobile,email: email,
-        address: address,company: company,website: website,desination:
-        desination,image: image);
+    final contact = ContactModel(
+        name: name,
+        mobile: mobile,
+        email: email,
+        address: address,
+        company: company,
+        website: website,
+        desination: desination,
+        image: image);
 
     print(contact.toString());
 
-    context.goNamed(ContactForm.routeName,extra: contact);
+    context.goNamed(ContactForm.routeName, extra: contact);
   }
 
   @override
@@ -39,12 +52,13 @@ class _ScanPageState extends State<ScanPage> {
       appBar: AppBar(
         title: const Text('Scan Page'),
         actions: [
-          IconButton(onPressed:  image.isEmpty? null : (){
-            createContacts();
-          }, icon:
-          const Icon
-            (Icons
-              .arrow_forward))
+          IconButton(
+              onPressed: image.isEmpty
+                  ? null
+                  : () {
+                      createContacts();
+                    },
+              icon: const Icon(Icons.arrow_forward))
         ],
       ),
       body: ListView(
@@ -135,31 +149,30 @@ class _ScanPageState extends State<ScanPage> {
   }
 
   getPropertyValue(String property, String value) {
-    switch(property){
+    switch (property) {
       case ContactProperties.name:
         name = value;
         break;
-        case ContactProperties.mobile:
+      case ContactProperties.mobile:
         mobile = value;
         break;
-        case ContactProperties.email:
+      case ContactProperties.email:
         email = value;
         break;
-        case ContactProperties.companyName:
+      case ContactProperties.companyName:
         company = value;
         break;
-        case ContactProperties.designation:
+      case ContactProperties.designation:
         desination = value;
         break;
-        case ContactProperties.address:
+      case ContactProperties.address:
         address = value;
         break;
-        case ContactProperties.website:
+      case ContactProperties.website:
         website = value;
         break;
     }
   }
-
 }
 
 class LineItem extends StatelessWidget {
@@ -169,7 +182,6 @@ class LineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return LongPressDraggable(
         data: line,
         dragAnchorStrategy: childDragAnchorStrategy,
@@ -220,8 +232,7 @@ class _DragTargetItemState extends State<DragTargetItem> {
                 child: Row(
                   children: [
                     Expanded(
-                        child:
-                            Text(dragItem.isEmpty ? 'Drop here' : dragItem)),
+                        child: Text(dragItem.isEmpty ? 'Drop here' : dragItem)),
                     if (dragItem.isNotEmpty)
                       InkWell(
                         onTap: () {
