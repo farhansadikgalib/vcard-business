@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vcard/pages/scan_page.dart';
 import 'package:vcard/providers/contact_provider.dart';
+import 'package:vcard/utils/helper_functions.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/';
@@ -60,11 +61,40 @@ class _HomePageState extends State<HomePage> {
           itemCount: provider.contactList.length,
           itemBuilder: (BuildContext context, int index) {
              final contact = provider.contactList[index];
-             return ListTile(title: Text(contact.name) ,trailing: IconButton(onPressed: (){}, icon: Icon(contact.favorite? Icons.favorite : Icons.favorite_border)),);
+             return Dismissible(
+                 key: UniqueKey(),
+                 confirmDismiss: showConfirmationDialog,
+                 onDismissed: (_)async{
+                   await provider.deleteContact(contact.id);
+                   showMsg(context, 'Deleted');
+                 },
+                 background: Container(
+                   padding: const EdgeInsets.only(right: 20),
+                   alignment: FractionalOffset.centerRight,
+                   color: Colors.red,
+                   child: const Icon(Icons.delete,size: 25,color: Colors.white,),
+                 ),
+                 direction: DismissDirection.endToStart,
+                 child: ListTile(title: Text(contact.name) ,trailing: IconButton(onPressed: (){}, icon: Icon(contact.favorite? Icons.favorite : Icons.favorite_border)),));
 
           },
         ),
       ),
     );
+  }
+
+  Future<bool?> showConfirmationDialog(DismissDirection direction) {
+    return showDialog(context: context, builder: (context)=>AlertDialog(
+      title: const Text('Delete Contact?'),
+      content: const Text('Are you sure to delete this contact?'),
+      actions: [
+        OutlinedButton(onPressed: (){
+          context.pop(false);
+        }, child: const Text('No'),),
+        OutlinedButton(onPressed: (){
+          context.pop(true);
+        }, child: const Text('Yes'),),
+      ],
+    ));
   }
 }

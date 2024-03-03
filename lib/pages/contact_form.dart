@@ -234,17 +234,17 @@ class _ContactFormState extends State<ContactForm> {
       widget.contactModel.designation = desinationController.text;
       widget.contactModel.address = addressController.text;
       widget.contactModel.website = websiteController.text;
-    }
 
-    Provider.of<ContactsProvider>(context, listen: false)
-        .insertContact(widget.contactModel)
-        .then((value) {
-      if (value > 0) {
-        showMsg(context, 'Saved');
-        context.goNamed(HomePage.routeName);
-      }
-    }).catchError((onError) {
-      showMsg(context, 'Failed to save');
-    });
+      Provider.of<ContactsProvider>(context, listen: false)
+          .insertContact(widget.contactModel)
+          .then((value) {
+        if (value > 0) {
+          showMsg(context, 'Saved');
+          context.goNamed(HomePage.routeName);
+        }
+      }).catchError((onError) {
+        showMsg(context, 'Failed to save');
+      });
+    }
   }
 }
