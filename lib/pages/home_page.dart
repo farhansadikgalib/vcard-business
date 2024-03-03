@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:vcard/pages/contact_details_page.dart';
 import 'package:vcard/pages/scan_page.dart';
 import 'package:vcard/providers/contact_provider.dart';
 import 'package:vcard/utils/helper_functions.dart';
@@ -48,6 +49,7 @@ class _HomePageState extends State<HomePage> {
               setState(() {
                 selectedIndex = index;
               });
+              _fetchData();
             },
             currentIndex: selectedIndex,
             items: const [
@@ -80,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 direction: DismissDirection.endToStart,
                 child: ListTile(
+                  onTap: ()=>context.goNamed(ContactDetailsPage.routeName,extra: contact.id),
                   title: Text(contact.name),
                   trailing: IconButton(
                       onPressed: () {
@@ -116,5 +119,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ));
+  }
+
+  void _fetchData() {
+    switch(selectedIndex){
+      case 0:
+        Provider.of<ContactsProvider>(context,listen: false).getAllContacts();
+        break;
+      case 1:
+        Provider.of<ContactsProvider>(context,listen: false).getAllFavoriteContacts();
+    }
   }
 }
