@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:vcard/pages/scan_page.dart';
+import 'package:vcard/providers/contact_provider.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/';
@@ -12,8 +14,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int selectedIndex = 0;
+
+  @override
+  void didChangeDependencies() {
+    Provider.of<ContactsProvider>(context, listen: false).getAllContacts();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,6 @@ class _HomePageState extends State<HomePage> {
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
       ),
-
       bottomNavigationBar: BottomAppBar(
         padding: EdgeInsets.zero,
         shape: const CircularNotchedRectangle(),
@@ -37,16 +43,27 @@ class _HomePageState extends State<HomePage> {
         clipBehavior: Clip.antiAlias,
         child: BottomNavigationBar(
             backgroundColor: Colors.blue[100],
-            onTap: (index){
+            onTap: (index) {
               setState(() {
                 selectedIndex = index;
               });
             },
             currentIndex: selectedIndex,
             items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.person),label: 'All'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite),label: 'Favorites')
-        ]),
+              BottomNavigationBarItem(icon: Icon(Icons.person), label: 'All'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite), label: 'Favorites')
+            ]),
+      ),
+      body: Consumer<ContactsProvider>(
+        builder: (context, provider, child) => ListView.builder(
+          itemCount: provider.contactList.length,
+          itemBuilder: (BuildContext context, int index) {
+             final contact = provider.contactList[index];
+             return ListTile(title: Text(contact.name) ,trailing: IconButton(onPressed: (){}, icon: Icon(contact.favorite? Icons.favorite : Icons.favorite_border)),);
+
+          },
+        ),
       ),
     );
   }
