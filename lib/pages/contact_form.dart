@@ -40,7 +40,7 @@ class _ContactFormState extends State<ContactForm> {
     addressController.text = widget.contactModel.address;
     websiteController.text = widget.contactModel.website;
     companyController.text = widget.contactModel.company;
-    desinationController.text = widget.contactModel.desination;
+    desinationController.text = widget.contactModel.designation;
   }
 
   @override
@@ -231,7 +231,7 @@ class _ContactFormState extends State<ContactForm> {
       widget.contactModel.mobile = phoneController.text;
       widget.contactModel.email = emailController.text;
       widget.contactModel.company = companyController.text;
-      widget.contactModel.desination = desinationController.text;
+      widget.contactModel.designation = desinationController.text;
       widget.contactModel.address = addressController.text;
       widget.contactModel.website = websiteController.text;
     }

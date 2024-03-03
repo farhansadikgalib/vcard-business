@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
@@ -26,7 +27,7 @@ class _ScanPageState extends State<ScanPage> {
       email = '',
       address = '',
       company = '',
-      desination = '',
+      designation = '',
       website = '',
       image = '';
 
@@ -38,10 +39,12 @@ class _ScanPageState extends State<ScanPage> {
         address: address,
         company: company,
         website: website,
-        desination: desination,
+        designation: designation,
         image: image);
 
-    print(contact.toString());
+    if (kDebugMode) {
+      print(contact.toString());
+    }
 
     context.goNamed(ContactForm.routeName, extra: contact);
   }
@@ -163,7 +166,7 @@ class _ScanPageState extends State<ScanPage> {
         company = value;
         break;
       case ContactProperties.designation:
-        desination = value;
+        designation = value;
         break;
       case ContactProperties.address:
         address = value;
