@@ -33,7 +33,6 @@ class _ContactFormState extends State<ContactForm> {
   @override
   void initState() {
     super.initState();
-
     nameController.text = widget.contactModel.name;
     emailController.text = widget.contactModel.email;
     phoneController.text = widget.contactModel.mobile;
