@@ -7,6 +7,7 @@ import 'package:vcard/pages/contact_details_page.dart';
 import 'package:vcard/pages/contact_form.dart';
 import 'package:vcard/pages/home_page.dart';
 import 'package:vcard/pages/scan_page.dart';
+import 'package:vcard/pages/splash_page.dart';
 import 'package:vcard/providers/contact_provider.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: _router,
       builder: EasyLoading.init(),
-      title: 'Flutter Demo',
+      title: 'Vcard Business',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -32,28 +33,38 @@ class MyApp extends StatelessWidget {
   }
 
   final _router = GoRouter(debugLogDiagnostics: true, routes: [
+
+
     GoRoute(
-        name: HomePage.routeName,
-        path: HomePage.routeName,
-        builder: (context, state) => const HomePage(),
+        path: SplashPage.routeName,
+        name: SplashPage.routeName,
+         builder: (context, state) => const SplashPage(),
         routes: [
           GoRoute(
-              name: ContactDetailsPage.routeName,
-              path: ContactDetailsPage.routeName,
-              builder: (context,state)=> ContactDetailsPage(id: state.extra! as int)
-          ),
-          GoRoute(
-              path: ScanPage.routeName,
-              name: ScanPage.routeName,
-              builder: (context, state) => const ScanPage(),
+              name: HomePage.routeName,
+              path: HomePage.routeName,
+              builder: (context, state) => const HomePage(),
               routes: [
                 GoRoute(
-                    path: ContactForm.routeName,
-                    name: ContactForm.routeName,
-                    builder: (context, state) => ContactForm(
-                          contactModel: state.extra! as ContactModel,
-                        ))
-              ]),
-        ])
+                    name: ContactDetailsPage.routeName,
+                    path: ContactDetailsPage.routeName,
+                    builder: (context,state)=> ContactDetailsPage(id: state.extra! as int)
+                ),
+                GoRoute(
+                    path: ScanPage.routeName,
+                    name: ScanPage.routeName,
+                    builder: (context, state) => const ScanPage(),
+                    routes: [
+                      GoRoute(
+                          path: ContactForm.routeName,
+                          name: ContactForm.routeName,
+                          builder: (context, state) => ContactForm(
+                            contactModel: state.extra! as ContactModel,
+                          ))
+                    ]),
+              ])
+        ]
+    ),
+
   ]);
 }
