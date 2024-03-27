@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vcard/pages/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   static const String routeName = 'splash';
@@ -9,14 +11,21 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
+
 class _SplashPageState extends State<SplashPage> {
+  initState() {
+    super.initState();
+    Future.delayed( Duration(seconds: 3), () {
+      context.goNamed(HomePage.routeName);
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             CircularProgressIndicator(),
             SizedBox(height: 20),
             Text('SplashPage'),
