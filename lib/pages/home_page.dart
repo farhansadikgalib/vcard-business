@@ -82,7 +82,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 direction: DismissDirection.endToStart,
                 child: ListTile(
-                  onTap: ()=>context.goNamed(ContactDetailsPage.routeName,extra: contact.id),
+                  onTap: () => context.goNamed(ContactDetailsPage.routeName,
+                      extra: contact.id),
                   title: Text(contact.name),
                   trailing: IconButton(
                       onPressed: () {
@@ -122,12 +123,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _fetchData() {
-    switch(selectedIndex){
+    switch (selectedIndex) {
       case 0:
-        Provider.of<ContactsProvider>(context,listen: false).getAllContacts();
+        Provider.of<ContactsProvider>(context, listen: false).getAllContacts();
         break;
       case 1:
-        Provider.of<ContactsProvider>(context,listen: false).getAllFavoriteContacts();
+        Provider.of<ContactsProvider>(context, listen: false)
+            .getAllFavoriteContacts();
     }
   }
 }
