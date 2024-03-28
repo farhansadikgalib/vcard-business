@@ -20,11 +20,13 @@ class ContactDetailsPage extends StatefulWidget {
 
 class _ContactDetailsPageState extends State<ContactDetailsPage> {
   late int id;
+
   @override
   void initState() {
     id = widget.id;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +37,17 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
         builder: (context, provider, child) => FutureBuilder<ContactModel>(
           future: provider.getContactById(id),
           builder: (context, snapshot) {
-            if(snapshot.hasData) {
+            if (snapshot.hasData) {
               final contact = snapshot.data!;
               return ListView(
                 padding: const EdgeInsets.all(8.0),
                 children: [
-                  Image.file(File(contact.image), width: double.infinity, height: 250, fit: BoxFit.cover,),
+                  Image.file(
+                    File(contact.image),
+                    width: double.infinity,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  ),
                   ListTile(
                     title: Text(contact.mobile),
                     trailing: Row(
@@ -62,7 +69,8 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                     ),
                   ),
                   ListTile(
-                    title: Text(contact.email.isEmpty ? 'Not found' : contact.email),
+                    title: Text(
+                        contact.email.isEmpty ? 'Not found' : contact.email),
                     trailing: IconButton(
                       onPressed: () {
                         _sendEmail(contact.email);
@@ -71,7 +79,9 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                     ),
                   ),
                   ListTile(
-                    title: Text(contact.address.isEmpty ? 'Not found' : contact.address),
+                    title: Text(contact.address.isEmpty
+                        ? 'Not found'
+                        : contact.address),
                     trailing: IconButton(
                       onPressed: () {
                         _openMap(contact.address);
@@ -80,7 +90,9 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                     ),
                   ),
                   ListTile(
-                    title: Text(contact.website.isEmpty ? 'Not found' : contact.website),
+                    title: Text(contact.website.isEmpty
+                        ? 'Not found'
+                        : contact.website),
                     trailing: IconButton(
                       onPressed: () {
                         _openBrowser(contact.website);
@@ -91,11 +103,14 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
                 ],
               );
             }
-            if(snapshot.hasError) {
-              return const Center(child: Text('Failed to load data'),);
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text('Failed to load data'),
+              );
             }
-            return const Center(child: Text('Please wait...'),);
-
+            return const Center(
+              child: Text('Please wait...'),
+            );
           },
         ),
       ),
@@ -104,7 +119,7 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
 
   void callContact(String mobile) async {
     final url = 'tel:$mobile';
-    if(await canLaunchUrlString(url)) {
+    if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
       showMsg(context, 'Cannot perform this task');
@@ -113,7 +128,7 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
 
   void smsContact(String mobile) async {
     final url = 'sms:$mobile';
-    if(await canLaunchUrlString(url)) {
+    if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else {
       showMsg(context, 'Cannot perform this task');
@@ -138,6 +153,5 @@ class _ContactDetailsPageState extends State<ContactDetailsPage> {
     }
   }
 
-  void _openMap(String address) async {
-  }
+  void _openMap(String address) async {}
 }
