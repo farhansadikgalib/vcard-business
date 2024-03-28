@@ -11,14 +11,14 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-
 class _SplashPageState extends State<SplashPage> {
   initState() {
     super.initState();
-    Future.delayed( Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 3), () {
       context.goNamed(HomePage.routeName);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
