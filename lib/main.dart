@@ -33,12 +33,10 @@ class MyApp extends StatelessWidget {
   }
 
   final _router = GoRouter(debugLogDiagnostics: true, routes: [
-
-
     GoRoute(
         path: SplashPage.routeName,
         name: SplashPage.routeName,
-         builder: (context, state) => const SplashPage(),
+        builder: (context, state) => const SplashPage(),
         routes: [
           GoRoute(
               name: HomePage.routeName,
@@ -48,8 +46,8 @@ class MyApp extends StatelessWidget {
                 GoRoute(
                     name: ContactDetailsPage.routeName,
                     path: ContactDetailsPage.routeName,
-                    builder: (context,state)=> ContactDetailsPage(id: state.extra! as int)
-                ),
+                    builder: (context, state) =>
+                        ContactDetailsPage(id: state.extra! as int)),
                 GoRoute(
                     path: ScanPage.routeName,
                     name: ScanPage.routeName,
@@ -59,12 +57,10 @@ class MyApp extends StatelessWidget {
                           path: ContactForm.routeName,
                           name: ContactForm.routeName,
                           builder: (context, state) => ContactForm(
-                            contactModel: state.extra! as ContactModel,
-                          ))
+                                contactModel: state.extra! as ContactModel,
+                              ))
                     ]),
               ])
-        ]
-    ),
-
+        ]),
   ]);
 }
